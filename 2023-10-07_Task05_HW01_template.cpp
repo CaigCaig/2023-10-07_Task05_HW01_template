@@ -1,36 +1,42 @@
-﻿#include <iostream>
-#include <vector>
+﻿#include <vector>
+#include <iostream>
 
 using namespace std;
 
-template <class T>
-T my_sqrt(T a)
+template <typename T>
+int my_square(T const& l)
 {
-    return a * a;
+	return l * l;
 }
 
-int main()
+template <typename T>
+auto my_square(vector<T> const& l)
 {
-    int x = 4;
-    vector<int> x_arr = {-1, 4, 8};
-    cout << "[IN]: " << x << endl;
-    cout << "[OUT]: " << my_sqrt(x) << endl;
+	using v_type = typename vector<T>::value_type;
+	vector<v_type> result;
+	for (auto it : l)
+	{
+		v_type temp = it * it;
+		result.push_back(temp);
+	}
+	return result;
+}
 
-    cout << "[IN]: ";
-    for (auto i = 0; i < x_arr.size(); i++)
-    {
-        cout << x_arr[i];
-        if (i < (x_arr.size() - 1)) cout << ", ";
-    }
-    cout << endl;
- 
-    cout << "[OUT]: ";
-    for (auto i = 0; i < x_arr.size(); i++)
-    {
-        cout << my_sqrt(x_arr[i]);
-        if (i < (x_arr.size() - 1)) cout << ", ";
-    }
-    cout << endl;
+int main() {
+	int x = 4;
+	cout << "[IN]: " << x << endl;
+	cout << "[OUT]: " << my_square(x) << endl;
 
-    system("pause");
+	vector<int> x_arr = { -1, 4, 8 };
+	vector<int> y_arr = my_square(x_arr);
+
+	cout << "[IN]: ";
+	for (auto i : x_arr) cout << i << ", ";
+	cout << endl;
+
+	cout << "[OUT]: ";
+	for (auto i : y_arr) cout << i << ", ";
+	cout << endl;
+
+	system("pause");
 }
